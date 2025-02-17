@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My BonBon!</title>
+    <style>
+        body {
+            background-color: pink;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            position: relative;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        h1 {
+            color: white;
+            font-size: 2.5em;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        button {
+            font-size: 1.5em;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+        .yes {
+            background-color: red;
+            color: white;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 10;
+        }
+        .no {
+            background-color: white;
+            color: red;
+            position: absolute;
+        }
+        .tulips {
+            position: absolute;
+            width: 100px;
+            height: auto;
+        }
+        #celebration {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        #celebration img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+        }
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: gold;
+            opacity: 0.7;
+            border-radius: 50%;
+            animation: fall 2s linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-100vh) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="mainContent">
+        <h1 id="valentineText">Will you be my Valentine, My Bon? 💖</h1>
+        <div class="buttons">
+            <button class="yes" id="yesButton" onclick="celebrate()">Yes</button>
+            <button class="no" onclick="moveButton()">No</button>
+        </div>
+    </div>
+    
+    <div id="celebration">
+        <h1>ANA BA!! I LOVEE YOU MN SOO MUCH ❤️</h1>
+        <img src="download.jpg" alt="US" width="800" height="600">
+    </div>
+    
+    <script>
+        let textOptions = [
+            "Please be my Valentine?",
+            "Pretty Please?",
+            "Sige na!",
+            "MO HILAK KO RON",
+            "LAST NA NI SIGE NA BA",
+			"LOVE MN TIKA SIGE NA"
+        ];
+        let clickCount = 0;
+        let noPressed = false;
+
+        function moveButton() {
+            let button = document.querySelector('.no');
+            let yesButton = document.getElementById('yesButton');
+            let text = document.getElementById('valentineText');
+
+            noPressed = true;
+
+            if (clickCount < textOptions.length - 1) {
+                text.innerText = textOptions[clickCount];
+                clickCount++;
+            }
+
+            let x = Math.random() * (window.innerWidth - 100);
+            let y = Math.random() * (window.innerHeight - 50);
+            button.style.left = `${x}px`;
+            button.style.top = `${y}px`;
+
+            let currentSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
+            yesButton.style.fontSize = `${currentSize * 1.5}px`;
+            yesButton.style.padding = `${currentSize * 0.8}px ${currentSize * 1.5}px`;
+            yesButton.style.zIndex = 1000;
+        }
+
+        function celebrate() {
+            document.getElementById('mainContent').style.display = 'none';
+            document.getElementById('celebration').style.display = 'block';
+            for (let i = 0; i < 100; i++) {
+                let confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = `${Math.random() * window.innerWidth}px`;
+                confetti.style.top = `${Math.random() * window.innerHeight}px`;
+                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                confetti.style.animationDuration = `${Math.random() * 2 + 1}s`;
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 2000);
+            }
+        }
+    </script>
+    
+    <!-- Tulip Decorations -->
+    <script>
+        for (let i = 0; i < 10; i++) {
+            let tulip = document.createElement('img');
+            tulip.src = 'https://png.pngtree.com/png-clipart/20230518/ourmid/pngtree-aesthetic-tulip-flower-watercolor-png-image_7100236.png';
+            tulip.className = 'tulips';
+            tulip.style.left = `${Math.random() * window.innerWidth}px`;
+            tulip.style.top = `${Math.random() * window.innerHeight}px`;
+            tulip.style.position = 'absolute';
+            tulip.style.width = '80px';
+            document.body.appendChild(tulip);
+        }
+    </script>
+</body>
+</html>
